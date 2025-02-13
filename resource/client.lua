@@ -25,43 +25,61 @@ local function pickFibres()
     local pos = GetEntityCoords(ped)
 
     local bale = GetClosestObjectOfType(pos.x, pos.y, pos.z, config.target.distance, model, false, false, false)
-    if DoesEntityExist(bale) then
-        if bale ~= closestBale then
-            closestBale = bale
-            balePos = GetEntityCoords(bale)
-        end
+    
+    if not DoesEntityExist(bale) then return false end
+    
+    if bale ~= closestBale then
+        closestBale = bale
+        balePos = GetEntityCoords(bale)
+    end
 
-        local dist = #(pos - balePos)
+    local dist = #(pos - balePos)
 
-        if dist <= config.target.distance then
-            ExecuteCommand(config.animation)
-            Wait(100)
+    if dist > config.target.distance then return false end
 
-            local success = lib.skillCheck(config.skillCheck, { 'e', 'e', 'e' })
+    ExecuteCommand(config.picking.animation)
+    Wait(100)
 
-            if not success then
-                ClearPedTasks(PlayerPedId())
-                
-                lib.notify({
-                    id = 'fibreFail',
-                    title = locale('fail.title'),
-                    description = locale('fail.description'),
-                    showDuration = true,
-                    position = 'top-right',
-                    icon = 'fa-solid fa-wheat-awn',
-                    iconColor = '#8C2425'
-                })
-                return
-            end
-
-            local picked = lib.callback.await('s4t4n667_fibrepicking:PickFibre', false, config.item)
+    if config.picking.useSkillcheck then
+        local success = lib.skillCheck(config.picking.skillCheck, config.picking.skillCheckKeys)
+        
+        if not success then
+            ClearPedTasks(ped)
             
-            ClearPedTasks(PlayerPedId())
-            return picked
-        else
+            lib.notify({
+                id = 'fibreFail',
+                title = locale('fail.title'),
+                description = locale('fail.description'),
+                showDuration = true,
+                position = 'top-right',
+                icon = 'fa-solid fa-wheat-awn',
+                iconColor = '#8C2425'
+            })
             return false
         end
+    else
+        lib.progressCircle({
+            duration = config.picking.progressDuration,
+            label = locale('progresslabel'),
+            useWhileDead = false,
+            canCancel = true,
+            position = 'bottom',
+            disable = {
+                car = true,
+                move = true,
+            },
+            anim = {
+                dict = "amb@prop_human_bum_bin@idle_a",
+                clip = "idle_a",
+            },
+        })
     end
+
+    local picked = lib.callback.await('s4t4n667_fibrepicking:PickFibre', false, config.item)
+    
+    ClearPedTasks(ped)
+    
+    return picked
 end
 
 

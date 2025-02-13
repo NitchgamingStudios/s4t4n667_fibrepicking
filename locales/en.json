@@ -8,6 +8,8 @@
     "fail" : {
         "title" : "Can't pick fibres",
         "description" : "You failed to pick any fibres"
-    }
+    },
+
+    "progresslabel" : "Picking fibres..."
 
 }

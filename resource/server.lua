@@ -5,7 +5,7 @@ local config = lib.require('config')
 lib.callback.register('s4t4n667_fibrepicking:PickFibre', function(source)
 
     local item = config.item
-    local count = config.amountPicked
+    local count = config.picking.amountPicked
 
     if exports.ox_inventory:CanCarryItem(source, item, count) then
         exports.ox_inventory:AddItem(source, item, count)
