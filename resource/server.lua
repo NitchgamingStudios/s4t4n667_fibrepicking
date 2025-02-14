@@ -1,5 +1,6 @@
 lib.locale()
 local config = lib.require('config')
+lib.versionCheck('s4t4n667/s4t4n667_fibrepicking')
 
 
 lib.callback.register('s4t4n667_fibrepicking:PickFibre', function(source)
