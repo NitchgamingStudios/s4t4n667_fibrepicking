@@ -9,5 +9,10 @@
         "description": "Vous n'avez pas réussi à ramasser de fibres"
     },
 
-    "progresslabel": "Ramassage des fibres..."
+    "progresslabel": "Ramassage des fibres...",
+
+    "cooldown": {
+        "title": "Temps de recharge actif",
+        "description": "Vous devez attendre avant de pouvoir ramasser d'autres fibres."
+    }
 }

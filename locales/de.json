@@ -5,9 +5,15 @@
     },
 
     "fail": {
-        "title": "Kann keine Fasern aufsammeln",
-        "description": "Es ist dir nicht gelungen, Fasern zu sammeln"
+        "title": "Kann keine Fasern aufheben",
+        "description": "Es ist dir nicht gelungen, Fasern aufzuheben"
     },
 
-    "progresslabel": "Sammle Fasern..."
+    "progresslabel": "Sammle Fasern...",
+
+    "cooldown": {
+        "title": "Abklingzeit aktiv",
+        "description": "Du musst warten, bevor du weitere Fasern sammeln kannst."
+    }
 }
+

@@ -2,11 +2,13 @@ return {
     
     item = 'fibres', -- item name for what you collect
     
+    cooldown = 5000, -- 5 seconds 
+    
     picking = {
         amountPicked = 1, -- amount you get every time
         animation = 'e mechanic4',
 
-        useSkillcheck = true,
+        useSkillcheck = false,
         skillCheck = {'easy', 'easy', 'easy'},
         skillCheckKeys = { 'e', 'e', 'e' },
 

@@ -1,5 +1,4 @@
 {
-
     "carry" : {
         "title" : "Full inventory",
         "description" : "You are unable to carry any more fibres"
@@ -10,6 +9,10 @@
         "description" : "You failed to pick any fibres"
     },
 
-    "progresslabel" : "Picking fibres..."
+    "progresslabel" : "Picking fibres...",
 
+    "cooldown" : {
+        "title" : "Cooldown Active",
+        "description" : "You must wait before trying to pick any more fibres."
+    }
 }

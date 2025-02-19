@@ -4,6 +4,7 @@ local config = require('config')
 local model = 1395331371 -- prop_haybale_03
 
 local closestBale, balePos
+local lastPickTime = 0  
 
 
 CreateThread(function()
@@ -22,30 +23,47 @@ end)
 
 local function pickFibres()
     local ped = PlayerPedId()
-    local pos = GetEntityCoords(ped)
+    local playerPos = GetEntityCoords(ped)
 
-    local bale = GetClosestObjectOfType(pos.x, pos.y, pos.z, config.target.distance, model, false, false, false)
-    
+    local currentTime = GetGameTimer()
+    if currentTime - lastPickTime < config.cooldown then
+        lib.notify({
+            id = 'cooldownActive',
+            title = locale('cooldown.title'),
+            description = locale('cooldown.description'),
+            showDuration = true,
+            position = 'top-right',
+            icon = 'fa-solid fa-hourglass-half',
+            iconColor = ''
+        })
+        return false
+    end
+
+    local bale = GetClosestObjectOfType(
+        playerPos.x, playerPos.y, playerPos.z,
+        config.target.distance, model,
+        false, false, false
+    )
+
     if not DoesEntityExist(bale) then return false end
-    
+
     if bale ~= closestBale then
         closestBale = bale
         balePos = GetEntityCoords(bale)
     end
 
-    local dist = #(pos - balePos)
-
-    if dist > config.target.distance then return false end
+    if #(playerPos - balePos) > config.target.distance then
+        return false
+    end
 
     ExecuteCommand(config.picking.animation)
     Wait(100)
 
     if config.picking.useSkillcheck then
         local success = lib.skillCheck(config.picking.skillCheck, config.picking.skillCheckKeys)
-        
+
         if not success then
             ClearPedTasks(ped)
-            
             lib.notify({
                 id = 'fibreFail',
                 title = locale('fail.title'),
@@ -64,10 +82,7 @@ local function pickFibres()
             useWhileDead = false,
             canCancel = true,
             position = 'bottom',
-            disable = {
-                car = true,
-                move = true,
-            },
+            disable = { car = true, move = true },
             anim = {
                 dict = "amb@prop_human_bum_bin@idle_a",
                 clip = "idle_a",
@@ -78,7 +93,11 @@ local function pickFibres()
     local picked = lib.callback.await('s4t4n667_fibrepicking:PickFibre', false, config.item)
     
     ClearPedTasks(ped)
-    
+
+    if picked then
+        lastPickTime = GetGameTimer()
+    end
+
     return picked
 end
 
