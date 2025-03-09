@@ -1,0 +1,18 @@
+{
+    "carry": {
+        "title": "Envanter Dolu",
+        "description": "Daha fazla lif taşıyamazsınız"
+    },
+
+    "fail": {
+        "title": "Lif Toplanamıyor",
+        "description": "Hiç lif toplamayı başaramadınız"
+    },
+
+    "progresslabel": "Lifler Toplanıyor...",
+
+    "cooldown": {
+        "title": "Bekleme Süresi Aktif",
+        "description": "Daha fazla lif toplamadan önce beklemelisiniz."
+    }
+}
