@@ -5,7 +5,9 @@ return {
     cooldown = 5000, -- 5 seconds 
     
     picking = {
-        amountPicked = 1, -- amount you get every time
+        minAmount = 1,     
+        maxAmount = 5,
+        
         animation = 'e mechanic4',
 
         useSkillcheck = false,
