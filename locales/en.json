@@ -1,4 +1,9 @@
 {
+    "item": {
+        "title": "Missing Tool",
+        "description": "You lack the required tools to perform this task"
+    },
+
     "carry" : {
         "title" : "Full inventory",
         "description" : "You are unable to carry any more fibres"
