@@ -2,6 +2,13 @@ lib.locale()
 local config = lib.require('config')
 lib.versionCheck('s4t4n667/s4t4n667_fibrepicking')
 
+lib.callback.register('s4t4n667_fibrepicking:checkItem', function(source, itemName)
+    local hasItem = exports.ox_inventory:Search(source, 'count', itemName) > 0
+    if config.debug then
+        print(('Checking if player %s has item %s: %s'):format(source, itemName, tostring(hasItem)))
+    end
+    return hasItem
+end)
 
 lib.callback.register('s4t4n667_fibrepicking:PickFibre', function(source)
 

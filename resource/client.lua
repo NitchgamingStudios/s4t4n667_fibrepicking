@@ -20,6 +20,14 @@ CreateThread(function()
     end
 end)
 
+local function checkItem(itemName, cb)
+    lib.callback("s4t4n667_fibrepicking:checkItem", false, function(hasItem)
+        if config.debug then
+            print("Has tool (client):", hasItem)
+        end
+        cb(hasItem)
+    end, itemName)
+end
 
 local function pickFibres()
     local ped = PlayerPedId()
@@ -111,8 +119,22 @@ local function fibreSpots()
             iconColor = config.target.iconColor,
             distance = config.target.distance,
             onSelect = function()
-                pickFibres()
-            end,
+                if not config.picking.item then
+                    pickFibres()
+                else 
+                    checkItem(config.picking.item, function(hasItem)
+                        if hasItem then
+                            pickFibres()
+                        else
+                            lib.notify({
+                                title = locale('item.title'),
+                                description = locale('item.description'),
+                                type = "error"
+                            })
+                        end
+                    end)
+                end
+            end
         },
     }
     exports.ox_target:addModel(model, options)
