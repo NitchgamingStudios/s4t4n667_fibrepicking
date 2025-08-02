@@ -1,5 +1,6 @@
 return {
-    
+    debug = true,
+
     item = 'fibres', -- item name for what you collect
     
     cooldown = 5000, -- 5 seconds 
@@ -9,6 +10,8 @@ return {
         maxAmount = 5,
         
         animation = 'e mechanic4',
+
+        item = 'shears', -- can be set to false if you don't want there to be a required item
 
         useSkillcheck = false,
         skillCheck = {'easy', 'easy', 'easy'},
