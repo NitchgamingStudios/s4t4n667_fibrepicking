@@ -109,14 +109,14 @@ RegisterNetEvent('s4t4n667_fibrepicking:buyTool', function(toolName)
         exports.ox_inventory:AddItem(src, toolItem, 1)
 
         TriggerClientEvent('ox_lib:notify', src, {
-            title = string.format(locale("purchased"), toolItem),
-            description = locale("purchasedDesc")..config.sell.currency..price,
+            title = string.format(locale("interact.menu.purchased"), toolItem),
+            description = locale("interact.menu.purchasedDesc")..config.sell.currency..price,
             type = 'success'
         })
     else
         TriggerClientEvent('ox_lib:notify', src, {
-            title = locale("insufficientFunds"),
-            description = locale("insufficientFundsDesc"),
+            title = locale("interact.menu.insufficientFunds"),
+            description = locale("interact.menu.insufficientFundsDesc"),
             type = 'error'
         })
     end
