@@ -19,14 +19,19 @@ return {
     },
 
     sell = {
+        ped = `a_m_m_farmer_01`,
+        coords = vector4(2588.0945, 4665.3818, 34.0768, 227.5840)
         moneyItem = 'money',
         price = 10,
         currency = "$",
     },
 
-    tool = {
-        item = 'shears',
-        price = 1000,
+    tool = { -- accepts table of tools or false to disable
+        {
+            item = 'shears',
+            price = 1000,
+            icon = 'fa-solid fa-scissors',
+        },
     },
 
     target = {

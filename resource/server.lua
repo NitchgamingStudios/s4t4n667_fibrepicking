@@ -82,27 +82,41 @@ RegisterNetEvent('s4t4n667_fibrepicking:sellFibres', function(amount)
     end
 end)
 
-RegisterNetEvent('s4t4n667_fibrepicking:buyTool', function()
+RegisterNetEvent('s4t4n667_fibrepicking:buyTool', function(toolName)
     local src = source
-    local price = config.tool.price
-    local toolItem = config.tool.item
     local currencyItem = config.sell.moneyItem
+
+    local toolConfig
+    for _, v in ipairs(config.tool) do
+        if v.item == toolName then
+            toolConfig = v
+            break
+        end
+    end
+
+    if not toolConfig then
+        print(('[WARN] Player %s tried to buy invalid tool: %s'):format(src, toolName))
+        return
+    end
+
+    local price = toolConfig.price
+    local toolItem = toolConfig.item
 
     local playerMoney = exports.ox_inventory:GetItem(src, currencyItem)?.count or 0
 
-        if playerMoney >= price then
+    if playerMoney >= price then
         exports.ox_inventory:RemoveItem(src, currencyItem, price)
         exports.ox_inventory:AddItem(src, toolItem, 1)
 
         TriggerClientEvent('ox_lib:notify', src, {
-            title = 'Tool Purchased',
-            description = ('You paid $%s'):format(toolItem, price),
+            title = string.format(locale("purchased"), toolItem),
+            description = locale("purchasedDesc")..config.sell.currency..price,
             type = 'success'
         })
     else
         TriggerClientEvent('ox_lib:notify', src, {
-            title = 'Insufficient Funds',
-            description = ('You need $%s to buy this tool'):format(price),
+            title = locale("insufficientFunds"),
+            description = locale("insufficientFundsDesc"),
             type = 'error'
         })
     end

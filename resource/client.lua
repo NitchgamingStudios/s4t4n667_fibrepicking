@@ -6,7 +6,6 @@ local model = 1395331371 -- prop_haybale_03
 local closestBale, balePos
 local lastPickTime = 0  
 
-
 CreateThread(function()
     if config.blip.enabled then
         local fibresBlip = AddBlipForCoord(config.blip.coords.x, config.blip.coords.y, config.blip.coords.z)
@@ -18,18 +17,16 @@ CreateThread(function()
         AddTextComponentString(config.blip.label)
         EndTextCommandSetBlipName(fibresBlip)
     end
-end)
 
-CreateThread(function()
-    local model = `a_m_m_farmer_01` -- choose your model
-    local coords = vector4(2588.0945, 4665.3818, 34.0768, 227.5840) -- change to your location
+    local pedModel = config.sell.ped
+    local coords = config.sell.coords
 
-    RequestModel(model)
-    while not HasModelLoaded(model) do
+    RequestModel(pedModel)
+    while not HasModelLoaded(pedModel) do
         Wait(0)
     end
 
-    local ped = CreatePed(0, model, coords.x, coords.y, coords.z - 1.0, coords.w, false, true)
+    local ped = CreatePed(0, pedModel, coords.x, coords.y, coords.z - 1.0, coords.w, false, true)
     SetEntityInvincible(ped, true)
     SetBlockingOfNonTemporaryEvents(ped, true)
     FreezeEntityPosition(ped, true)
@@ -54,14 +51,12 @@ function openSellMenu()
         icon = 'leaf',
         menu = "fibre_submenu"
     }
-    if config.tool.item then
+    if config.tool then
         Options[#Options + 1] = {
             title = locale('interact.menu.buy'),
-            description = locale('interact.menu.buyDesc')..config.sell.currency..tostring(config.tool.price),
+            description = locale('interact.menu.buyDesc'),
             icon = 'hammer',
-            onSelect = function()
-                TriggerServerEvent('s4t4n667_fibrepicking:buyTool')
-            end
+            menu = "tool_submenu"
         }
     end
 
@@ -98,9 +93,28 @@ lib.registerContext({
         }
 })
 
+local toolOptions = {}
+for _, v in ipairs(config.tool) do
+    toolOptions[#toolOptions + 1] = {
+        title = string.format(locale('interact.menu.tool'), v.item),
+        description = string.format(locale('interact.menu.toolDesc'), v.item) .. Config.sell.currency .. tostring(v.price),
+        icon = v.icon,
+        onSelect = function()
+            TriggerServerEvent('s4t4n667_fibrepicking:buyTool', v.item)
+        end
+    }
+end
+
+lib.registerContext({
+    id = "tool_submenu",
+    title = locale('interact.menu.buy'),
+    options = toolOptions,
+    menu = "sell_menu",
+})
+
 function fibreDialog()
-    local input = lib.inputDialog("Sell Custom Amount", {
-        { type = 'number', label = "Enter Amount:", name = "amount" }
+    local input = lib.inputDialog(locale("sellC"), {
+        { type = 'number', label = locale('interact.sellMenu.customAmount'), name = "amount" }
     })
 
     if input then
@@ -112,8 +126,8 @@ function fibreDialog()
             TriggerServerEvent('s4t4n667_fibrepicking:sellFibres', amount)
         else
             lib.notify({
-                title = 'Invalid Amount',
-                description = 'Please enter a number greater than 0.',
+                title = locale('interact.sellMenu.invalidAmount'),
+                description = locale('interact.sellMenu.invalidAmountDesc'),
                 type = 'error'
             })
         end
@@ -220,20 +234,30 @@ local function fibreSpots()
             iconColor = config.target.iconColor,
             distance = config.target.distance,
             onSelect = function()
-                if not config.tool.item then
+                if not config.tool or #config.tool == 0 then
                     pickFibres()
-                else 
-                    checkItem(config.tool.item, function(hasItem)
+                    return
+                end
+
+                local function checkTools(i)
+                    if i > #config.tool then
+                        lib.notify({
+                            title = locale('item.title'),
+                            description = locale('item.description'),
+                            type = "error"
+                        })
+                        return
+                    end
+
+                    checkItem(config.tool[i].item, function(hasItem)
                         if hasItem then
                             pickFibres()
                         else
-                            lib.notify({
-                                title = locale('item.title'),
-                                description = locale('item.description'),
-                                type = "error"
-                            })
+                            checkTools(i + 1)
                         end
                     end)
+                end
+                checkTools(1)
                 end
             end
         },
