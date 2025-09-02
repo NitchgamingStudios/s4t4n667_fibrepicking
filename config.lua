@@ -20,7 +20,7 @@ return {
 
     sell = {
         ped = `a_m_m_farmer_01`,
-        coords = vector4(2588.0945, 4665.3818, 34.0768, 227.5840)
+        coords = vector4(2588.0945, 4665.3818, 34.0768, 227.5840),
         moneyItem = 'money',
         price = 10,
         currency = "$",
