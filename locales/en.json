@@ -42,8 +42,6 @@
             "perItem" : " per fibre)",
             "sellAll": "Sell All",
             "sellAllDesc": "Sell all available fibres in your pockets",
-            "sellC": "Sell Custom Amount",
-            "customAmont": "Enter Amount: ",
             "invalidAmount" : "Invalid Amount",
             "invalidAmountDesc" : "Please enter a valid amount of fibres to sell",
             "saleSuccess" : "Sale Complete",

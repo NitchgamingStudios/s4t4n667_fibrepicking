@@ -24,6 +24,8 @@ return {
         moneyItem = 'money',
         price = 10,
         currency = "$",
+        sellDialog = "Sell Custom Amount",
+        customAmount = "Enter Amount: ",
     },
 
     tool = { -- accepts table of tools or false to disable

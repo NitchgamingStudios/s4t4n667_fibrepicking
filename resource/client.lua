@@ -113,8 +113,8 @@ lib.registerContext({
 })
 
 function fibreDialog()
-    local input = lib.inputDialog(locale("sellC"), {
-        { type = 'number', label = locale('interact.sellMenu.customAmount'), name = "amount" }
+    local input = lib.inputDialog(config.sell.sellDialog, {
+        { type = 'number', label = config.sell.customAmount, name = "amount" }
     })
 
     if input then
