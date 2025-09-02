@@ -31,7 +31,7 @@
             "buyDesc" : "Purchase tools used to pick fibres.",
             "tool" : "Buy %s",
             "toolDesc" : "Purchase %s for ",
-            "purchased" : "Purchased a %s",
+            "purchased" : "Purchased %s",
             "purchasedDesc" : "You paid ",
             "insufficientFunds" : "Insufficient Funds",
             "insufficientFundsDesc" : "You do not have enough money to purchase this item"
