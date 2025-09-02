@@ -258,9 +258,8 @@ local function fibreSpots()
                     end)
                 end
                 checkTools(1)
-                end
             end
-        },
+        }
     }
     exports.ox_target:addModel(model, options)
 end
