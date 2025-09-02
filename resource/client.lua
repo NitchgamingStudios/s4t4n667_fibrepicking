@@ -97,7 +97,7 @@ local toolOptions = {}
 for _, v in ipairs(config.tool) do
     toolOptions[#toolOptions + 1] = {
         title = string.format(locale('interact.menu.tool'), v.item),
-        description = string.format(locale('interact.menu.toolDesc'), v.item) .. Config.sell.currency .. tostring(v.price),
+        description = string.format(locale('interact.menu.toolDesc'), v.item) .. config.sell.currency .. tostring(v.price),
         icon = v.icon,
         onSelect = function()
             TriggerServerEvent('s4t4n667_fibrepicking:buyTool', v.item)
