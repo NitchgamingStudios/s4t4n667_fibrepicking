@@ -11,13 +11,27 @@ return {
         
         animation = 'e mechanic4',
 
-        item = 'shears', -- can be set to false if you don't want there to be a required item
-
         useSkillcheck = false,
         skillCheck = {'easy', 'easy', 'easy'},
         skillCheckKeys = { 'e', 'e', 'e' },
 
         progressDuration = 3000, -- only used if useSkillcheck is false 
+    },
+
+    sell = {
+        ped = `a_m_m_farmer_01`,
+        coords = vector4(2588.0945, 4665.3818, 34.0768, 227.5840)
+        moneyItem = 'money',
+        price = 10,
+        currency = "$",
+    },
+
+    tool = { -- accepts table of tools or false to disable
+        {
+            item = 'shears',
+            price = 1000,
+            icon = 'fa-solid fa-scissors',
+        },
     },
 
     target = {
